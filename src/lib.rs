@@ -244,9 +244,9 @@ pub fn template(
     mode: Mode,
     ignore: Vec<&str>,
 ) -> Result<(), Box<dyn Error>> {
-    for entry in WalkDir::new(source_dir).into_iter().filter_entry(|entry| {
-        let ignore_list: Vec<&Path> = ignore.iter().map(|fname| Path::new(fname)).collect();
+    let ignore_list: Vec<&Path> = ignore.iter().map(|fname| Path::new(fname)).collect();
 
+    for entry in WalkDir::new(source_dir).into_iter().filter_entry(|entry| {
         !ignore_list.contains(&entry.path().strip_prefix(&source_dir).unwrap())
     }) {
         let source_file = entry?;
